@@ -2,6 +2,8 @@
 Protected Module NaturalSortLib
 	#tag Method, Flags = &h1
 		Protected Sub ClearNaturalSplitCache()
+		  //-- Remove all entries in the split cache
+		  
 		  If Not ( pNaturalSplitCache Is Nil ) Then
 		    pNaturalSplitCache.RemoveAll
 		    
