@@ -149,13 +149,16 @@ Protected Module NaturalSortLib
 	#tag EndProperty
 
 
+	#tag Constant, Name = CopyrightString, Type = String, Dynamic = False, Default = \"NaturalSortLib v0.1.0 / \xC2\xA9 Eric de La Rochette - June 2017", Scope = Protected
+	#tag EndConstant
+
 	#tag Constant, Name = VersionBug, Type = Double, Dynamic = False, Default = \"0", Scope = Protected
 	#tag EndConstant
 
 	#tag Constant, Name = VersionMajor, Type = Double, Dynamic = False, Default = \"0", Scope = Protected
 	#tag EndConstant
 
-	#tag Constant, Name = VersionMinor, Type = Double, Dynamic = False, Default = \"0", Scope = Protected
+	#tag Constant, Name = VersionMinor, Type = Double, Dynamic = False, Default = \"1", Scope = Protected
 	#tag EndConstant
 
 
