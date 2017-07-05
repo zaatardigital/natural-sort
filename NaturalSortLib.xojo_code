@@ -57,88 +57,93 @@ Protected Module NaturalSortLib
 		  // No need to handle an empty string
 		  If inString = "" Then Return theResult
 		  
-		  If pNaturalSplitCache Is Nil Then pNaturalSplitCache = New Xojo.Core.Dictionary
-		  // Do we have this string in cache ?
-		  If pNaturalSplitCache.HasKey( inString ) Then 
-		    // We have it cached, retrieve it
-		    theResult = pNaturalSplitCache.Value( inString )
+		  // Create the cache if needed
+		  If pNaturalSplitCache Is Nil Then
+		    pNaturalSplitCache = New Xojo.Core.Dictionary
 		    
 		  Else
-		    // No cache entry, build the array from the string
-		    // Setup a few variables
-		    Dim theBuffer() As String
-		    Dim theBufferType As StringChunk.Types
-		    Dim theCharCount As Integer = inString.Len
-		    
-		    // Let's process each character one at a time
-		    // The outpout condition for the loop is when there is no more character to process
-		    Dim IsFirstCharacter As Boolean = True
-		    Dim i As Integer = 1
-		    Do
-		      // Retrieve the char and its code
-		      Dim theChar As String = inString.Mid( i,1 )
-		      Dim theCharCode As Integer = theChar.Asc
+		    // Do we have this string in cache ?
+		    If pNaturalSplitCache.HasKey( inString ) Then 
+		      // We have it cached, retrieve it
+		      Return pNaturalSplitCache.Value( inString )
 		      
-		      // Skip control codes ( ie. ASCII code 0-31 )
-		      If theCharCode > 31 Then
-		        // Determine the character type
-		        Dim theCharType As StringChunk.Types = _
-		        If( theCharCode > 47 And theCharCode < 58, StringChunk.Types.Number, StringChunk.Types.Characters )
+		    End If
+		    
+		  End If
+		  
+		  // No cache entry, build the array from the string
+		  // Setup a few variables
+		  Dim theBuffer() As String
+		  Dim theBufferType As StringChunk.Types
+		  Dim theCharCount As Integer = inString.Len
+		  
+		  // Let's process each character one at a time
+		  // The outpout condition for the loop is when there is no more character to process
+		  Dim IsFirstCharacter As Boolean = True
+		  Dim i As Integer = 1
+		  Do
+		    // Retrieve the char and its code
+		    Dim theChar As String = inString.Mid( i, 1 )
+		    Dim theCharCode As Integer = theChar.Asc
+		    
+		    // Skip control codes ( ie. ASCII code 0-31 )
+		    If theCharCode > 31 Then
+		      // Determine the character type
+		      Dim theCharType As StringChunk.Types = If( theCharCode > 47 And theCharCode < 58, _
+		      StringChunk.Types.Number, StringChunk.Types.Characters )
+		      
+		      // How to handle it?
+		      If isFirstCharacter Then
+		        // Handle the first real character ( ie. not a control code  )
+		        theBuffer.Append theChar
+		        theBufferType = theCharType
+		        isFirstCharacter = False
 		        
-		        // How to handle it?
-		        If isFirstCharacter Then
-		          // Handle the first real character ( ie. not a control code  )
-		          theBuffer.Append theChar
-		          theBufferType = theCharType
-		          isFirstCharacter = False
-		          
-		        Elseif theCharType = theBufferType Then
-		          // Add the character to the buffer
-		          theBuffer.Append theChar
+		      Elseif theCharType = theBufferType Then
+		        // Add the character to the buffer
+		        theBuffer.Append theChar
+		        
+		      Else
+		        // the type has changed, store the chunk and its type
+		        If theBufferType = StringChunk.Types.Number Then
+		          theResult.Append New StringChunk( Val( Join( theBuffer, "" ) ), theBufferType )
 		          
 		        Else
-		          // the type has changed, store the chunk and its type
-		          If theBufferType = StringChunk.Types.Number Then
-		            theResult.Append New StringChunk( Val( Join( theBuffer, "" ) ), theBufferType )
-		            
-		          Else
-		            theResult.Append New StringChunk( Join( theBuffer, "" ), theBufferType )
-		            
-		          End If
-		          
-		          // Reset the buffer with the new character
-		          Redim theBuffer( 0 )
-		          theBuffer( 0 ) = theChar
-		          theBufferType = theCharType
+		          theResult.Append New StringChunk( Join( theBuffer, "" ), theBufferType )
 		          
 		        End If
 		        
-		      End If
-		      
-		      // Next character
-		      i = i + 1
-		      
-		    Loop Until i > theCharCount 
-		    
-		    // Add the last buffer if needed
-		    If theBuffer.Ubound > -1 Then
-		      // Store the chunk
-		      If theBufferType = StringChunk.Types.Number Then
-		        theResult.Append New StringChunk( Val( Join( theBuffer, "" ) ), theBufferType )
-		        
-		      Else
-		        theResult.Append New StringChunk( Join( theBuffer, "" ), theBufferType )
+		        // Reset the buffer with the new character
+		        Redim theBuffer( 0 )
+		        theBuffer( 0 ) = theChar
+		        theBufferType = theCharType
 		        
 		      End If
 		      
 		    End If
 		    
-		    // Add the entry to the cache
-		    // The cache can't be Nil here since it has been created
-		    // at the beggining of the method if it was missing
-		    pNaturalSplitCache.Value( inString ) = theResult
+		    // Next character
+		    i = i + 1
+		    
+		  Loop Until i > theCharCount 
+		  
+		  // Add the last buffer if needed
+		  If theBuffer.Ubound > -1 Then
+		    // Store the chunk
+		    If theBufferType = StringChunk.Types.Number Then
+		      theResult.Append New StringChunk( Val( Join( theBuffer, "" ) ), theBufferType )
+		      
+		    Else
+		      theResult.Append New StringChunk( Join( theBuffer, "" ), theBufferType )
+		      
+		    End If
 		    
 		  End If
+		  
+		  // Add the entry to the cache
+		  // The cache can't be Nil here since it has been created
+		  // at the beginning of the method if it was missing
+		  pNaturalSplitCache.Value( inString ) = theResult
 		  
 		  // Return the array
 		  Return theResult
