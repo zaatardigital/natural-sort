@@ -33,7 +33,7 @@ Protected Module NaturalSortLib
 		    Dim theResult As Integer = theLeftValue.Compare( theRightValue )
 		    
 		    // If they are different, return the result of the comparison
-		    If theResult <> 0 Then Return theResult
+		    If theResult <> 0 Then Return If( theResult > 0, 1, -1)
 		    
 		    // Increment the counter
 		    i = i + 1
@@ -44,7 +44,7 @@ Protected Module NaturalSortLib
 		  // Then the shorter is the smallest i.e. the first.
 		  // So the difference in the number of parts will give us our comparison result.
 		  // And if there is the same number of parts, then the strings are naturally equal. 
-		  Return theLeftValues.Ubound - theRightValues.Ubound
+		  Return Sign( theLeftValues.Ubound - theRightValues.Ubound )
 		End Function
 	#tag EndMethod
 
