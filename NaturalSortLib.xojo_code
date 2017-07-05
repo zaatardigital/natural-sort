@@ -151,15 +151,41 @@ Protected Module NaturalSortLib
 	#tag EndMethod
 
 
+	#tag Note, Name = License
+		MIT License
+		
+		Copyright (c) 2017 Za'atar Digital
+		
+		Permission is hereby granted, free of charge, to any person obtaining a copy
+		of this software and associated documentation files (the "Software"), to deal
+		in the Software without restriction, including without limitation the rights
+		to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+		copies of the Software, and to permit persons to whom the Software is
+		furnished to do so, subject to the following conditions:
+		
+		The above copyright notice and this permission notice shall be included in all
+		copies or substantial portions of the Software.
+		
+		THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+		IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+		FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+		AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+		LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+		OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+		SOFTWARE.
+		
+	#tag EndNote
+
+
 	#tag Property, Flags = &h0
 		pNaturalSplitCache As Xojo.Core.Dictionary
 	#tag EndProperty
 
 
-	#tag Constant, Name = CopyrightString, Type = String, Dynamic = False, Default = \"NaturalSortLib v0.1.0 / \xC2\xA9 Eric de La Rochette - June 2017", Scope = Protected
+	#tag Constant, Name = CopyrightString, Type = String, Dynamic = False, Default = \"NaturalSortLib v0.1.1 / \xC2\xA9 Eric de La Rochette - July 2017", Scope = Protected
 	#tag EndConstant
 
-	#tag Constant, Name = VersionBug, Type = Double, Dynamic = False, Default = \"0", Scope = Protected
+	#tag Constant, Name = VersionBug, Type = Double, Dynamic = False, Default = \"1", Scope = Protected
 	#tag EndConstant
 
 	#tag Constant, Name = VersionMajor, Type = Double, Dynamic = False, Default = \"0", Scope = Protected
